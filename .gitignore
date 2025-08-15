@@ -1,0 +1,17 @@
+bin/
+obj/
+
+*.user
+*.suo
+.vscode/
+.idea/
+
+*.log
+
+*.db-shm
+*.db-wal
+
+*.nupkg
+*.snupkg
+
+publish/

@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+<div class="container mt-5 w-50">
+  <h2>Giriş Yap</h2>
+
+  @if (ViewBag.Hata != null)
+  {
+    <div class="alert alert-danger">@ViewBag.Hata</div>
+  }
+
+  <form asp-action="Login" method="post">
+    <div class="mb-3">
+      <label>Kullanıcı Adı</label>
+      <input name="kullaniciAdi" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+      <label>Şifre</label>
+      <input name="sifre" type="password" class="form-control" required />
+    </div>
+
+    <button class="btn btn-primary">Giriş Yap</button>
+  </form>
+</div>

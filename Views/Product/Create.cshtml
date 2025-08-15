@@ -1,0 +1,19 @@
+@model WebApp.Models.Product
+
+<h2 class="my-3">Ürün Ekle</h2>
+
+<form asp-action="Create" method="post" class="w-50">
+  <div class="mb-3">
+    <label class="form-label">Ürün Adı</label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Fiyat</label>
+    <input asp-for="Price" class="form-control" type="number" step="0.01" />
+    <span asp-validation-for="Price" class="text-danger"></span>
+  </div>
+
+  <button type="submit" class="btn btn-success">Kaydet</button>
+</form>

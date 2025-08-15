@@ -1,0 +1,60 @@
+@{
+  ViewData["Title"] = "Tüm Ürünler";
+  var products = ViewBag.Products as dynamic;
+}
+@{
+  var rol = Context.Session.GetString("rol");
+}
+
+<h2>Tüm Ürünler</h2>
+<a href="/Product/Create" class="btn btn-success mb-3">Yeni Ürün Ekle</a>
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Ad</th>
+      <th>Fiyat</th>
+      <th>Durum</th>
+      <th>Onay Tarihi</th>
+      <th>Onaylayan</th>
+      <th>İşlem</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in ViewBag.Products)
+    {
+      <tr>
+        <td>@item.Name</td>
+        <td>@item.Price ₺</td>
+        <td>
+          @(item.IsApproved ? "✅ Onaylandı" : "⏳ Onay Bekliyor")
+        </td>
+        <td>
+          @(item.ApprovedAt != null ? ((DateTime)item.ApprovedAt).ToString("dd.MM.yyyy HH:mm") : "-")
+        </td>
+        <td>@item.ApprovedBy</td>
+        <td>
+          <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+
+          <form asp-controller="Product" asp-action="Delete" method="post" style="display:inline;">
+            <input type="hidden" name="id" value="@item.Id" />
+            <button type="submit" class="btn btn-danger btn-sm"
+              onclick="return confirm('Silmek istediğine emin misin?');">Sil</button>
+          </form>
+
+
+        </td>
+
+        <td>
+          @if (rol == "Admin" && item.IsApproved == false)
+          {
+            <form asp-action="Approve" asp-route-id="@item.Id" method="post">
+              <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+            </form>
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

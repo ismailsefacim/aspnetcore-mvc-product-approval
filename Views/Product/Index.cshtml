@@ -1,0 +1,54 @@
+@model List<WebApp.Models.Product>
+
+<h2>Ürün Listesi</h2>
+<a href="/Product/Create" class="btn btn-success mb-3">Yeni Ürün Ekle</a>
+
+@{
+  var rol = Context.Session.GetString("rol");
+}
+
+
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Adı</th>
+      <th>Fiyat</th>
+      <th>Durum</th>
+      @if (rol == "Admin" || rol == "User")
+      {
+        <th>İşlemler</th>
+      }
+
+  </thead>
+  <tbody>
+    @foreach (var product in Model)
+    {
+      <tr>
+        <td>@product.Name</td>
+        <td>@product.Price TL</td>
+        <td>
+          @(product.IsApproved ? "✅ Onaylandı" : "⏳ Onay Bekliyor")
+        </td>
+        <td>
+          @if (!product.IsApproved)
+          {
+            <a href="/Product/Edit/@product.Id" class="btn btn-sm btn-warning">Düzenle</a>
+            <form asp-action="Delete" method="post" style="display:inline;">
+              <input type="hidden" name="id" value="@product.Id" />
+              <button type="submit" class="btn btn-sm btn-danger"
+                onclick="return confirm('Silmek istediğine emin misin?');">Sil</button>
+            </form>
+          }
+          else
+          {
+            <span class="text-muted">Onaylandı</span>
+          }
+        </td>
+
+
+
+
+      </tr>
+    }
+  </tbody>
+</table>
