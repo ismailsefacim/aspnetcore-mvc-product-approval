@@ -14,4 +14,4 @@ obj/
 *.nupkg
 *.snupkg
 
-publish/
+publish/.DS_Store
